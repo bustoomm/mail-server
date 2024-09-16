@@ -1,0 +1,21 @@
+myhostname = isi pake sub domain
+mydomain = isi dengan domain utama
+myorigin = $mydomain
+mydestination = $myhostname, localhost.$mydomain, localhost
+
+# Network
+inet_interfaces = all
+inet_protocols = ipv4
+
+# Authentication
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_tls_cert_file=/etc/ssl/certs/server.crt
+smtpd_tls_key_file=/etc/ssl/private/server.key
+smtpd_tls_security_level=may
+smtpd_tls_auth_only=yes
+
+# Domain and account handling
+home_mailbox = Maildir/
+mailbox_command =

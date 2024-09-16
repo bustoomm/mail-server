@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  postfix_dovecot:
+    build: .
+    container_name: smtp-server
+    ports:
+      - "25:25"     # SMTP
+      - "143:143"   # IMAP
+      - "110:110"   # POP3
+    volumes:
+      - ./postfix/main.cf:/etc/postfix/main.cf
+      - ./dovecot/dovecot.conf:/etc/dovecot/dovecot.conf
+      - ./dovecot/conf.d/10-mail.conf:/etc/dovecot/conf.d/10-mail.conf
+      - /var/mail/usermail:/var/mail/usermail
+      - /smtp-server/ssl/server.crt:/etc/ssl/certs/server.crt
+      - /smtp-server/ssl/server.key:/etc/ssl/private/server.key
+    environment:
+      - "MAIL_DOMAIN=isi dengan domain utama"
+      - "MAIL_HOST=isi dengan sub domain"
+    restart: always
+
+  webmail:
+    image: hardware/rainloop
+    container_name: webmail
+    ports:
+      - "8888:8888"
+    restart: always
